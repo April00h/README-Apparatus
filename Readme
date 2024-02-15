@@ -1,12 +1,5 @@
 <h1 align="center">README Apparatus </h1>
  
-<p align="center">
-    <img src="https://img.shields.io/badge/Javascript-yellow" />
-    <img src="https://img.shields.io/badge/jQuery-blue"  />
-    <img src="https://img.shields.io/badge/-node.js-green" />
-    <img src="https://img.shields.io/badge/-inquirer-red" >
-    <img src="https://img.shields.io/badge/-json-orange" />
-</p>
 
 ## Table of Contents
 - [Description](#description)
@@ -83,9 +76,8 @@ In the terminal run the `node index.js` command and answer the prompts
 
 
 ## Contributors
-[April H]()
+[April H](https://github.com/April00h)
 
 
 ## Questions
- Please reach out with any questions or concerns: [E-mail](mailto:aprilhunt00.ah@gmail.com) , [GitHub]()<br />
-
+ Please reach out with any questions or concerns: [E-mail](mailto:aprilhunt00.ah@gmail.com) , [GitHub](https://github.com/April00h)
