@@ -1,95 +1,13 @@
 // Declaring dependencies and variables
-const fs = require("fs");
-const util = require("util");
-const inquirer = require("inquirer");
-const generateReadme = require("./utils/generateReadme.js")
-const writeFileAsync = util.promisify(fs.writeFile);
 
-//Prompt the questions to populate into the README.md
-function promptUser() {
-    return inquirer.prompt([
-        {
-            type: "input",
-            name: "projectTitle",
-            message: "What is the project title?",
-        },
-        {
-            type: "input",
-            name: "description",
-            message: "Write a brief description of your project: "
-        },
-        {
-            type: "input",
-            name: "installation",
-            message: "Describe the installation process if any: ",
-        },
-        {
-            type: "input",
-            name: "usage",
-            message: "What is this project usage for?"
-        },
-        {
-            type: "list",
-            name: "license",
-            message: "Chose the appropriate license for this project: ",
-            choices: [
-                "Apache",
-                "Academic",
-                "GNU",
-                "ISC",
-                "MIT",
-                "Mozilla",
-                "Open"
-            ]
-        },
-        {
-            type: "input",
-            name: "contributing",
-            message: "Who are the contributors of this projects?"
-        },
-        {
-            type: "input",
-            name: "tests",
-            message: "Is there a test included?"
-        },
-        {
-            type: "input",
-            name: "questions",
-            message: "What do I do if I have an issue? "
-        },
-        {
-            type: "input",
-            name: "username",
-            message: "Please enter your GitHub username: "
-        },
-        {
-            type: "input",
-            name: "email",
-            message: "Please enter your email: "
-        }
-    ]);
-}
-
-// Asynchronous function to write to readme
-async function init() {
-    try {
-        // ask user questions and lock in answers
-        const answers = await promptUser();
-        const generateContent = generateReadme(answers);
-        await writeFileAsync('./dist/README.md', generateContent);
-        console.log('✅ Successfull README');
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-init();
 
 // Dependencies
 const fs = require("fs");
 const util = require("util");
 const inquirer = require("inquirer");
-const generateReadme = require("./utils/generateReadme.js");
+const generateReadme = require("./utils/generateMarkdown.js")
+
+
 
 // Promisifying writeFile function
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -131,11 +49,6 @@ async function promptUser() {
             },
             {
                 type: "input",
-                name: "tests",
-                message: "Tests:"
-            },
-            {
-                type: "input",
                 name: "questions",
                 message: "Questions or Issues:"
             },
@@ -154,6 +67,44 @@ async function promptUser() {
         console.log(error);
     }
 }
+// TODO: Create a function that returns a license badge based on which license is passed in
+// If there is no license, return an empty string
+function renderLicenseBadge(license) {
+    if (license === "MIT") {
+      return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
+    } else if (license === "Apache 2.0") {
+      return "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
+    } else if (license === "BSD 3-Clause") {
+      return "[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)";
+    } else {
+      return "";
+    }
+  }
+  
+  // TODO: Create a function that returns the license link
+  // If there is no license, return an empty string
+  function renderLicenseLink(license) {
+    if (license === "MIT") {
+      return "https://opensource.org/licenses/MIT";
+    } else if (license === "Apache 2.0") {
+      return "https://opensource.org/licenses/Apache-2.0";
+    } else if (license === "BSD 3-Clause") {
+      return "https://opensource.org/licenses/BSD-3-Clause";
+    } else {
+      return "";
+    }
+  }
+  
+  //Create a function that returns the license section of README
+  // If there is no license, return an empty string
+  function renderLicenseSection(license) {
+    if (license === "None") {
+      return "";
+    } else {
+      return `## License
+  This project is licensed under the [${license}](${renderLicenseLink(license)}) License.`;
+    }
+  }
 
 // Function to generate README
 async function init() {
